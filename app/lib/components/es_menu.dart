@@ -12,6 +12,16 @@ class ESMenu extends StatelessWidget {
               Navigator.of(context).pushNamed('/foto');
             },
             child: const Text('Tirar foto')),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/mapa');
+            },
+            child: const Text('Mapa')),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/lista');
+            },
+            child: const Text('Lista')),
       ],
     );
   }

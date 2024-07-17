@@ -40,6 +40,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   sqflite: ^2.3.2
   intl:
+  geolocator: ^11.0.0
+  http: ^1.1.1
+  google_maps_flutter: ^2.0.6
+  google_maps_flutter_android: ^2.9.0
+  google_maps_flutter_platform_interface: ^2.7.0
 
 dev_dependencies:
   flutter_test:
