@@ -1,3 +1,1 @@
-# Nota = 10 = 😀
-
-# Nota < 10 🔪🗡️😵
+https://www.youtube.com/watch?v=tade019Wr2E
