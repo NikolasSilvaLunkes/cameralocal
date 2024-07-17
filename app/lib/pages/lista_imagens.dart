@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:app/infra/model/imagem.dart';
 import 'package:app/infra/rfeign/imagem_feign.dart';
+import 'package:app/pages/mapa.dart';
 import 'package:flutter/material.dart';
 
 class ListaImagensPage extends StatefulWidget {
@@ -40,7 +41,19 @@ class ListaImagensPageState extends State<ListaImagensPage> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text('No data available'));
           } else {
-            final imageData = snapshot.data!;
+            final imageData = snapshot.data!.where((data) {
+              // Check if all parameters are present and base64 can be converted
+              try {
+                base64Decode(data.imagem);
+                return data.usuario != null &&
+                    data.latitude != null &&
+                    data.longitude != null;
+              } catch (e) {
+                // If base64 cannot be converted, exclude the image
+                return false;
+              }
+            }).toList();
+
             return ListView.builder(
               itemCount: imageData.length,
               itemBuilder: (context, index) {
@@ -57,6 +70,18 @@ class ListaImagensPageState extends State<ListaImagensPage> {
                         Text('Longitude: ${data.longitude}'),
                       ],
                     ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MapaPage(
+                            title: 'Mapa',
+                            latitude: data.latitude,
+                            longitude: data.longitude,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 );
               },

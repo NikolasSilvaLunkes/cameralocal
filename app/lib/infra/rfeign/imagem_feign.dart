@@ -6,7 +6,16 @@ class ImagemFeign {
   Future<List<Imagem>> fetchImageData() async {
     final response = await fetchFromApi();
     List<dynamic> data = jsonDecode(response);
-    return data.map((json) => Imagem.fromJson(json)).toList();
+    List<Imagem> images = [];
+
+    for (var json in data) {
+      try {
+        Imagem image = Imagem.fromJson(json);
+        images.add(image);
+      } catch (_) {}
+    }
+
+    return images;
   }
 
   Future<String> fetchFromApi() async {

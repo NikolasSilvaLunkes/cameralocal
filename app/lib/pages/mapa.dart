@@ -4,9 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapaPage extends StatefulWidget {
-  const MapaPage({super.key, required this.title});
+  const MapaPage(
+      {Key? key,
+      required this.title,
+      required this.latitude,
+      required this.longitude})
+      : super(key: key);
 
   final String title;
+  final double latitude;
+  final double longitude;
 
   @override
   State<MapaPage> createState() => _MapaPageState();
@@ -14,11 +21,18 @@ class MapaPage extends StatefulWidget {
 
 class _MapaPageState extends State<MapaPage> {
   late GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  Set<Marker> _markers = {};
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    setState(() {
+      _markers.add(
+        Marker(
+          markerId: MarkerId('marker_1'),
+          position: LatLng(widget.latitude, widget.longitude),
+        ),
+      );
+    });
   }
 
   @override
@@ -34,9 +48,10 @@ class _MapaPageState extends State<MapaPage> {
             child: GoogleMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(
-                target: _center,
+                target: LatLng(widget.latitude, widget.longitude),
                 zoom: 11.0,
               ),
+              markers: _markers,
             ),
           ),
         ],
